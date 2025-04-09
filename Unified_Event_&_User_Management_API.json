@@ -1,0 +1,259 @@
+{
+  "info": {
+    "name": "Unified Event & User Management API",
+    "description": "Merged collection of Event Management and User Management APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Event Management",
+      "item": [
+        {
+          "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events",
+              "host": ["{{base_url}}"],
+              "path": ["events"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Sample Event\", \"description\": \"An event for demonstration.\", \"location\": \"Mumbai\", \"date\": \"2025-05-01\", \"max_attendees\": 50}"
+            },
+            "description": "Allows an organizer or admin to create an event."
+          }
+        },
+        {
+          "name": "List Events",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{base_url}}/events?limit=10&offset=0",
+              "host": ["{{base_url}}"],
+              "path": ["events"],
+              "query": [
+                { "key": "limit", "value": "10" },
+                { "key": "offset", "value": "0" }
+              ]
+            },
+            "description": "Retrieve list of events with optional pagination and filtering."
+          }
+        },
+        {
+          "name": "Get Event by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/events/1",
+              "host": ["{{base_url}}"],
+              "path": ["events", "1"]
+            },
+            "description": "Retrieve a specific event by its ID."
+          }
+        },
+        {
+          "name": "Join Event",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/events/1/join",
+              "host": ["{{base_url}}"],
+              "path": ["events", "1", "join"]
+            },
+            "description": "Join a specific event by its ID."
+          }
+        },
+        {
+          "name": "Delete Event",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/events/1/delete",
+              "host": ["{{base_url}}"],
+              "path": ["events", "1", "delete"]
+            },
+            "description": "Delete a specific event by its ID (admin/organizer only)."
+          }
+        },
+        {
+          "name": "Update Event",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/events/1/update",
+              "host": ["{{base_url}}"],
+              "path": ["events", "1", "update"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Updated Event Title\"}"
+            },
+            "description": "Update event details (admin/organizer only)."
+          }
+        },
+        {
+          "name": "Remove Attendee from Event",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{base_url}}/events/1/attendees/2",
+              "host": ["{{base_url}}"],
+              "path": ["events", "1", "attendees", "2"]
+            },
+            "description": "Remove a specific user from event attendees."
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/register",
+              "host": ["{{base_url}}"],
+              "path": ["users", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"strongpassword\",\n    \"role\": \"attendee\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/login",
+              "host": ["{{base_url}}"],
+              "path": ["users", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"john_doe\",\n    \"password\": \"strongpassword\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Current User Info",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/me",
+              "host": ["{{base_url}}"],
+              "path": ["users", "me"]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "<YOUR_ACCESS_TOKEN>", "type": "string" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "List All Attendees",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "<YOUR_ACCESS_TOKEN>", "type": "string" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/5/delete",
+              "host": ["{{base_url}}"],
+              "path": ["users", "5", "delete"]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "<YOUR_ACCESS_TOKEN>", "type": "string" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Users (Admin Only)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/users/all_users",
+              "host": ["{{base_url}}"],
+              "path": ["users", "all_users"]
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "<YOUR_ACCESS_TOKEN>", "type": "string" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/3/update",
+              "host": ["{{base_url}}"],
+              "path": ["users", "3", "update"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\": \"johnny_updated\",\n    \"role\": \"organizer\"\n}"
+            },
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                { "key": "token", "value": "<YOUR_ACCESS_TOKEN>", "type": "string" }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

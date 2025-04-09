@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Django specific
+*.log
+*.pot
+*.pyc
+*.pyo
+*.db
+*.sqlite3
+db.sqlite3
+
+# Environment variables
+.env
+.env.*
+
+# FastAPI / Alembic / SQLAlchemy migrations
+alembic.ini
+*.pid
+
+# VS Code
+.vscode/
+
+# PyCharm
+.idea/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Python packaging
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Log files
+*.log
+
+# Static and media files (if generated at runtime)
+staticfiles/
+media/

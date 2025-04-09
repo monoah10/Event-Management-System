@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% block title %}All Events{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4 text-center fw-bold text-dark">📅 Upcoming Events</h2>
+
+  <!-- Search Form -->
+  <form method="get" class="mb-4">
+    <div class="input-group shadow-sm">
+      <input
+        type="text"
+        name="location"
+        class="form-control"
+        placeholder="Search by location..."
+        value="{{ request.GET.location }}"
+      >
+      <button type="submit" class="btn btn-primary">
+        <i class="bi bi-search"></i> Search
+      </button>
+    </div>
+  </form>
+
+  <!-- Events Grid -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    {% for event in events %}
+      <div class="col">
+        <div class="card h-100 shadow-sm border-0 hover-shadow">
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">{{ event.title }}</h5>
+            <p class="card-text text-muted">
+              <i class="bi bi-calendar-event me-2"></i><strong>Date:</strong> {{ event.date }}<br>
+              <i class="bi bi-geo-alt me-2"></i><strong>Location:</strong> {{ event.location }}<br>
+              <i class="bi bi-people me-2"></i><strong>Capacity:</strong> {{ event.max_attendees }}<br>
+              <i class="bi bi-person-check me-2"></i><strong>Available:</strong> {{ event.available_space }}
+            </p>
+          </div>
+          <div class="card-footer d-flex flex-wrap justify-content-between gap-2">
+            <a href="{% url 'event_join' event.id %}" class="btn btn-success btn-sm">
+              <i class="bi bi-plus-circle"></i> Join
+            </a>
+            {% if request.session.user_role == "admin" or request.session.user_role == "organizer" %}
+              <a href="{% url 'event_edit' event.id %}" class="btn btn-warning btn-sm">
+                <i class="bi bi-pencil-square"></i> Edit
+              </a>
+              <a href="{% url 'event_delete' event.id %}"
+   class="btn btn-danger btn-sm"
+   onclick="return confirm('Are you sure you want to delete the event: {{ event.title }}?');">
+  <i class="bi bi-trash"></i> Delete
+</a>
+              <a href="{% url 'event_attendees' event.id %}" class="btn btn-info btn-sm">
+                <i class="bi bi-person-lines-fill"></i> Attendees
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <div class="col">
+        <div class="alert alert-info w-100 text-center">
+          <i class="bi bi-info-circle"></i> No events found.
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<style>
+  .hover-shadow:hover {
+    transform: scale(1.02);
+    transition: all 0.2s ease-in-out;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+  }
+</style>
+{% endblock %}

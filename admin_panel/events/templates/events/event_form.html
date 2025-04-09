@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Create Event{% endblock %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card shadow p-4" style="max-width: 700px; width: 100%;">
+    <h2 class="mb-4 text-center text-primary fw-bold">🎉 Create New Event</h2>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% for field in form %}
+        <div class="mb-3 position-relative">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small mt-1">{{ field.errors.0 }}</div>
+          {% endif %}
+          {% if field.name == "location" %}
+            <ul id="suggestions" class="list-group position-absolute w-100" style="z-index:1000;"></ul>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <div class="d-flex justify-content-between mt-4">
+        <a href="{% url 'event_list' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left-circle"></i> Cancel
+        </a>
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-check-circle"></i> Create
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const locationInput = document.getElementById('id_location');
+  const suggestionList = document.getElementById('suggestions');
+
+  locationInput.addEventListener('input', async function () {
+    const query = this.value;
+    if (!query.trim()) {
+      suggestionList.innerHTML = '';
+      return;
+    }
+
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
+      const places = await res.json();
+
+      suggestionList.innerHTML = '';
+      places.slice(0, 5).forEach(place => {
+        const li = document.createElement('li');
+        li.className = 'list-group-item list-group-item-action';
+        li.textContent = place.display_name;
+        li.style.cursor = 'pointer';
+
+        li.addEventListener('click', () => {
+          locationInput.value = place.display_name;
+          suggestionList.innerHTML = '';
+        });
+
+        suggestionList.appendChild(li);
+      });
+    } catch (err) {
+      console.error("Autocomplete error:", err);
+    }
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!locationInput.contains(e.target) && !suggestionList.contains(e.target)) {
+      suggestionList.innerHTML = '';
+    }
+  });
+});
+</script>
+{% endblock %}

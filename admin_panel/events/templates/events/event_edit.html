@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card shadow-sm p-4" style="max-width: 600px; width: 100%;">
+    <h3 class="mb-4 text-center text-primary fw-bold">✏️ Edit Event</h3>
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      {% for field in form %}
+        <div class="mb-3">
+          <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+          {{ field }}
+          {% if field.errors %}
+            <div class="text-danger small">{{ field.errors|striptags }}</div>
+          {% endif %}
+        </div>
+      {% endfor %}
+
+      <div class="d-flex justify-content-between">
+        <a href="{% url 'event_list' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-arrow-left-circle"></i> Cancel
+        </a>
+        <button type="submit" class="btn btn-success">
+          <i class="bi bi-save"></i> Update Event
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

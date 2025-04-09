@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold">Welcome, {{ username }}!</h2>
+    <p class="text-muted">Role: <span class="badge bg-dark">{{ user_role }}</span></p>
+  </div>
+
+  <div class="row justify-content-center">
+    {% if user_role == "admin" %}
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-people-fill fs-1 text-primary"></i>
+            <h5 class="card-title mt-2">Manage Users</h5>
+            <a href="{% url 'admin_user_list' %}" class="btn btn-primary w-100 mt-3">Go</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-calendar2-event-fill fs-1 text-info"></i>
+            <h5 class="card-title mt-2">Event List</h5>
+            <a href="{% url 'event_list' %}" class="btn btn-outline-info w-100 mt-3">Browse Events</a>
+          </div>
+        </div>
+      </div>
+
+    {% elif user_role == "organizer" %}
+      <div class="col-md-4 mb-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-calendar2-event-fill fs-1 text-info"></i>
+            <h5 class="card-title mt-2">Event List</h5>
+            <a href="{% url 'event_list' %}" class="btn btn-outline-info w-100 mt-3">Browse Events</a>
+          </div>
+        </div>
+      </div>
+
+    {% else %}
+      <div class="col-md-6 mb-3">
+        <div class="card shadow-sm h-100">
+          <div class="card-body text-center">
+            <i class="bi bi-calendar-check-fill fs-1 text-success"></i>
+            <h5 class="card-title mt-2">Upcoming Events</h5>
+            <p class="text-muted">Explore the latest events and register!</p>
+            <a href="{% url 'event_list' %}" class="btn btn-success w-100 mt-3">View Events</a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
