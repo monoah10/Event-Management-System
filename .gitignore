@@ -23,7 +23,9 @@ db.sqlite3
 .env.*
 
 # FastAPI / Alembic / SQLAlchemy migrations
-alembic.ini
+backend/migrations/
+backend/alembic.ini
+
 *.pid
 
 # VS Code

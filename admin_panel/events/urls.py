@@ -12,9 +12,9 @@ urlpatterns = [
     path("logout/", views.user_logout, name="logout"),
     path("users/", views.all_users, name="admin_user_list"),
     path("attendees/", views.attendees, name="attendee_list"),
-path('users/<int:user_id>/delete/', views.delete_user, name='delete_user'),
-path('users/<int:user_id>/update/', views.update_user, name='update_user'),
+    path('users/<int:user_id>/delete/', views.delete_user, name='delete_user'),
+    path('users/<int:user_id>/update/', views.update_user, name='update_user'),
     path("events/<int:event_id>/attendees/", views.event_attendees, name="event_attendees"),
-path("events/<int:event_id>/attendees/<int:user_id>/remove/", views.remove_attendee, name="remove_attendee"),
+    path("events/<int:event_id>/attendees/<int:user_id>/remove/", views.remove_attendee, name="remove_attendee"),
     path("dashboard/", views.dashboard, name="dashboard"),
 ]

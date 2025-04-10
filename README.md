@@ -52,6 +52,21 @@ pip install -r requirements.txt
 
 Backend – FastAPI
 cd backend
+ # This creates the migrations/ directory with config files.
+alembic init migrations  
+
+# alembic.ini Configuration
+Update the sqlalchemy.url in alembic.ini:
+sqlalchemy.url = databaseurl set in database.py ("mysql://django_user:python10534@localhost:3306/event_db")
+# add below inside migrations/env.py uncomment
+"""import os
+import sys
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))  #or the backend/model path
+from backend.models import Base"""
+
+# inside migrations/env.py set target_metadata = Base.metadata
+alembic revision --autogenerate -m "Your migration message"
+alembic upgrade head
 uvicorn main:app --reload
 Access API Docs at:
 Swagger: http://localhost:8000/docs

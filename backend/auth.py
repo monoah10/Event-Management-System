@@ -9,7 +9,6 @@ from backend.schemas import UserRole
 
 SECRET_KEY = "43ed080f1efd09b6856bb5b5c01bde00b5925beb1a8ce35573bc0a06bd8c192c"
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
